@@ -9,9 +9,9 @@ const PlayRadioIntentHandler = {
     const stationSlot = handlerInput.requestEnvelope.request.intent.slots.station;
     let speechText;
     let streamUrl;
-    let stationName; // declare stationName here
+    let stationName;
     if (stationSlot && stationSlot.value) {
-      stationName = stationSlot.value.toLowerCase(); // assign value to stationName here
+      stationName = stationSlot.value.toLowerCase();
       switch (stationName) {
         case 'rai radio 1':
           speechText = 'Playing RAI Radio 1';

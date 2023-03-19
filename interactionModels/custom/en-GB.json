@@ -1,0 +1,131 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "antonio\u0027s radio",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.NavigateHomeIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.FallbackIntent",
+          "samples": []
+        },
+        {
+          "name": "PlayRadioIntent",
+          "slots": [
+            {
+              "name": "station",
+              "type": "StationName",
+              "samples": [
+                "{station}"
+              ],
+              "multipleValues": {
+                "enabled": true
+              }
+            }
+          ],
+          "samples": [
+            "play {station}"
+          ]
+        },
+        {
+          "name": "AMAZON.PauseIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.ResumeIntent",
+          "samples": []
+        }
+      ],
+      "types": [
+        {
+          "values": [
+            {
+              "name": {
+                "value": "radiofreccia",
+                "synonyms": [
+                  "Radiofreccia",
+                  "radio arrow",
+                  "Radio Arrow"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "rai radio 3",
+                "synonyms": [
+                  "radio 3",
+                  "radio three",
+                  "rai radio three",
+                  "Radio 3",
+                  "Radio Three",
+                  "RAI Radio Three"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "rai radio 1",
+                "synonyms": [
+                  "radio 1",
+                  "radio one",
+                  "rai radio one",
+                  "Radio 1",
+                  "RAI Radio One",
+                  "Radio One"
+                ]
+              }
+            }
+          ],
+          "name": "StationName"
+        }
+      ]
+    },
+    "dialog": {
+      "intents": [
+        {
+          "name": "PlayRadioIntent",
+          "confirmationRequired": false,
+          "prompts": {},
+          "slots": [
+            {
+              "name": "station",
+              "type": "StationName",
+              "elicitationRequired": true,
+              "confirmationRequired": false,
+              "prompts": {
+                "elicitation": "Elicit.Slot.1152205744895.1040952916022"
+              }
+            }
+          ]
+        }
+      ],
+      "delegationStrategy": "ALWAYS"
+    },
+    "prompts": [
+      {
+        "id": "Elicit.Slot.1152205744895.1040952916022",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Which radio station did you want to listen to?"
+          }
+        ]
+      }
+    ]
+  },
+  "version": "8"
+}

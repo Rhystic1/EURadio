@@ -1,0 +1,83 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "radio di antonio",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.NavigateHomeIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.FallbackIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.PauseIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.ResumeIntent",
+          "samples": []
+        },
+        {
+          "name": "PlayRadioIntent",
+          "slots": [
+            {
+              "name": "station",
+              "type": "StationName"
+            }
+          ],
+          "samples": [
+            "riproduci {station}"
+          ]
+        }
+      ],
+      "types": [
+        {
+          "values": [
+            {
+              "name": {
+                "value": "radiofreccia",
+                "synonyms": [
+                  "radio freccia"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "rai radio 3",
+                "synonyms": [
+                  "radio tre",
+                  "radio 3"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "rai radio 1",
+                "synonyms": [
+                  "radio 1",
+                  "radio uno"
+                ]
+              }
+            }
+          ],
+          "name": "StationName"
+        }
+      ]
+    }
+  },
+  "version": "2"
+}

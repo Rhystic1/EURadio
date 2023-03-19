@@ -16,7 +16,7 @@ const PlayRadioIntentHandler = {
         case 'rai radio 1':
           speechText = 'Playing RAI Radio 1';
           streamUrl = 'https://icestreaming.rai.it/1.mp3';
-          break;
+          break; 
         case 'rai radio 3':
           speechText = 'Playing RAI Radio 3';
           streamUrl = 'https://icestreaming.rai.it/3.mp3';
@@ -51,10 +51,21 @@ const LaunchRequestHandler = {
     return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
   },
   handle(handlerInput) {
-    console.log('Inside LaunchRequestHandler');
     return handlerInput.responseBuilder
-      .speak('Welcome to Rhystic Radio!')
-      .reprompt('Welcome to Rhystic Radio!')
+      .speak('Welcome to EU Radio!')
+      .reprompt('Welcome to EU Radio!')
+      .getResponse();
+  },
+};
+
+const HelpRequestHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+    && handlerInput.requestEnvelope.request.intent.name === 'AMAZON.HelpIntent';
+  },
+  handle(handlerInput) {
+    return handlerInput.responseBuilder
+      .speak('You can say "Play" followed by a radio station name. To exit, just say Stop, Exit, or Quit.')
       .getResponse();
   },
 };
@@ -66,14 +77,52 @@ const CancelAndStopIntentHandler = {
                 || Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.StopIntent');
     },
     handle(handlerInput) {
-        const speakOutput = 'Goodbye!';
-
         return handlerInput.responseBuilder
-            .speak(speakOutput)
+            .addAudioPlayerStopDirective()
+            .withShouldEndSession(true)
             .getResponse();
     }
 };
 
+const PausePlaybackHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'AMAZON.PauseIntent';
+  },
+  handle(handlerInput) {
+    const { attributesManager } = handlerInput;
+    const playbackInfo = attributesManager.getSessionAttributes().playbackInfo || {};
+    
+    playbackInfo.state = 'PAUSED';
+    const sessionAttributes = attributesManager.getSessionAttributes();
+    // The spread operator is unsupported, so we use Object.assign instead
+attributesManager.setSessionAttributes(Object.assign({}, sessionAttributes, { playbackInfo }));
+    
+    return handlerInput.responseBuilder
+      .addAudioPlayerStopDirective()
+      .getResponse();
+  }
+};
+
+const ResumePlaybackHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'AMAZON.ResumeIntent';
+  },
+  handle(handlerInput) {
+    const { attributesManager } = handlerInput;
+    const playbackInfo = attributesManager.getSessionAttributes().playbackInfo || {};
+    
+    playbackInfo.state = 'PLAYING';
+const sessionAttributes = attributesManager.getSessionAttributes();
+attributesManager.setSessionAttributes(Object.assign({}, sessionAttributes, { playbackInfo }));
+    
+    return handlerInput.responseBuilder
+      .addAudioPlayerPlayDirective()
+      .getResponse();
+  }
+};
+
 exports.handler = Alexa.SkillBuilders.custom()
-    .addRequestHandlers(CancelAndStopIntentHandler, LaunchRequestHandler, PlayRadioIntentHandler)
+    .addRequestHandlers(CancelAndStopIntentHandler, CancelAndStopIntentHandler, LaunchRequestHandler, PlayRadioIntentHandler, PausePlaybackHandler, ResumePlaybackHandler, HelpRequestHandler)
     .lambda();

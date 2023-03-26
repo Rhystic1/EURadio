@@ -6,6 +6,8 @@ const PlayRadioIntentHandler = {
       && handlerInput.requestEnvelope.request.intent.name === 'PlayRadioIntent';
   },
   handle(handlerInput) {
+    const locale = Alexa.getLocale(handlerInput.requestEnvelope);
+    const languageStrings = require(`./locales/${locale}.json`);
     const stationSlot = handlerInput.requestEnvelope.request.intent.slots.station;
     let speechText;
     let streamUrl;
@@ -14,28 +16,34 @@ const PlayRadioIntentHandler = {
       stationName = stationSlot.value.toLowerCase();
       switch (stationName) {
         case 'rai radio 1':
-          speechText = 'Playing RAI Radio 1';
+          speechText = languageStrings[locale].PLAY_RAI1;
           streamUrl = 'https://icestreaming.rai.it/1.mp3';
-          break; 
+          break;
+        case 'rai radio 2':
+          speechText = languageStrings[locale].PLAY_RAI2;
+          streamUrl = 'https://icestreaming.rai.it/2.mp3';
+          break;
         case 'rai radio 3':
-          speechText = 'Playing RAI Radio 3';
+          speechText = languageStrings[locale].PLAY_RAI3;
           streamUrl = 'https://icestreaming.rai.it/3.mp3';
           break;
         case 'radiofreccia':
-          speechText = 'Playing Radiofreccia';
+          speechText = languageStrings[locale].PLAY_RADIOFRECCIA;
           streamUrl = 'https://streamcdnb7-dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S3160845/D6MENOraq6Qy/chunklist_b128000.m3u8';
           break;
         default:
-          speechText = `Sorry, I don't know the station ${stationName}`;
+          speechText = languageStrings[locale].STATIONNAME_UNSURE;
       }
     } else {
-      speechText = `Sorry, I didn't catch which station you want to play`;
+      speechText = languageStrings[locale].STATIONNAME_UNSURE;
     }
 
     if (streamUrl) {
       return handlerInput.responseBuilder
         .speak(speechText)
-        .addAudioPlayerPlayDirective('REPLACE_ALL', streamUrl, stationName, 0)
+        .addAudioPlayerPlayDirective('REPLACE_ALL', streamUrl, stationName, 0, null, {
+          skill: 'eu-radio'
+        })
         .getResponse();
     } else {
       return handlerInput.responseBuilder
@@ -46,14 +54,18 @@ const PlayRadioIntentHandler = {
   }
 };
 
+
 const LaunchRequestHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
   },
   handle(handlerInput) {
+    const locale = Alexa.getLocale(handlerInput.requestEnvelope);
+    const languageStrings = require(`./locales/${locale}.json`);
+    const speechText = languageStrings[locale].WELCOME_MSG;
     return handlerInput.responseBuilder
-      .speak('Welcome to EU Radio!')
-      .reprompt('Welcome to EU Radio!')
+      .speak(speechText)
+      .reprompt(speechText)
       .getResponse();
   },
 };
@@ -61,27 +73,80 @@ const LaunchRequestHandler = {
 const HelpRequestHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-    && handlerInput.requestEnvelope.request.intent.name === 'AMAZON.HelpIntent';
+      && handlerInput.requestEnvelope.request.intent.name === 'AMAZON.HelpIntent';
   },
   handle(handlerInput) {
+    const locale = Alexa.getLocale(handlerInput.requestEnvelope);
+    const languageStrings = require(`./locales/${locale}.json`);
+    const speechText = languageStrings[locale].HELP;
     return handlerInput.responseBuilder
-      .speak('You can say "Play" followed by a radio station name. To exit, just say Stop, Exit, or Quit.')
+      .speak(speechText)
+      .reprompt(speechText)
       .getResponse();
   },
 };
 
+const SessionEndedRequestHandler = {
+  canHandle(handlerInput) {
+    return Alexa.getRequestType(handlerInput.requestEnvelope) === 'SessionEndedRequest';
+  },
+  handle(handlerInput) {
+    const { attributesManager } = handlerInput;
+    const playbackInfo = attributesManager.getSessionAttributes().playbackInfo || {};
+
+    playbackInfo.state = 'STOPPED';
+    const sessionAttributes = attributesManager.getSessionAttributes();
+    // The spread operator is unsupported, so we use Object.assign instead
+    attributesManager.setSessionAttributes(Object.assign({}, sessionAttributes, { playbackInfo }));
+    return handlerInput.responseBuilder
+      .addAudioPlayerStopDirective()
+      .withShouldEndSession(true)
+      .getResponse();
+  }
+};
+
 const CancelAndStopIntentHandler = {
-    canHandle(handlerInput) {
-        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
-            && (Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.CancelIntent'
-                || Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.StopIntent');
-    },
-    handle(handlerInput) {
-        return handlerInput.responseBuilder
-            .addAudioPlayerStopDirective()
-            .withShouldEndSession(true)
-            .getResponse();
-    }
+  canHandle(handlerInput) {
+    console.log(JSON.stringify(handlerInput.requestEnvelope));
+    const requestType = Alexa.getRequestType(handlerInput.requestEnvelope);
+    const intentName = Alexa.getIntentName(handlerInput.requestEnvelope);
+    return requestType === 'IntentRequest' && (
+      intentName === 'AMAZON.CancelIntent' ||
+      intentName === 'AMAZON.StopIntent'
+    );
+  },
+  handle(handlerInput) {
+    const { attributesManager } = handlerInput;
+    const playbackInfo = attributesManager.getSessionAttributes().playbackInfo || {};
+
+    playbackInfo.state = 'STOPPED';
+    const sessionAttributes = attributesManager.getSessionAttributes();
+    // The spread operator is unsupported, so we use Object.assign instead
+    attributesManager.setSessionAttributes(Object.assign({}, sessionAttributes, { playbackInfo }));
+    return handlerInput.responseBuilder
+      .addAudioPlayerStopDirective()
+      .withShouldEndSession(true)
+      .getResponse();
+  }
+};
+
+const UnsupportedIntentsHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent
+      && (handlerInput.requestEnvelope.request.intent.name === 'AMAZON.RepeatIntent'
+        || handlerInput.requestEnvelope.request.intent.name === 'AMAZON.PreviousIntent'
+        || handlerInput.requestEnvelope.request.intent.name === 'AMAZON.NextIntent'
+        || handlerInput.requestEnvelope.request.intent.name === 'AMAZON.StartOverIntent');
+  },
+  handle(handlerInput) {
+    const locale = Alexa.getLocale(handlerInput.requestEnvelope);
+    const languageStrings = require(`./locales/${locale}.json`);
+    const speechText = languageStrings[locale].UNSUPPORTED_CMD;
+    return handlerInput.responseBuilder
+      .speak(speechText)
+      .getResponse();
+  }
 };
 
 const PausePlaybackHandler = {
@@ -92,12 +157,12 @@ const PausePlaybackHandler = {
   handle(handlerInput) {
     const { attributesManager } = handlerInput;
     const playbackInfo = attributesManager.getSessionAttributes().playbackInfo || {};
-    
+
     playbackInfo.state = 'PAUSED';
     const sessionAttributes = attributesManager.getSessionAttributes();
     // The spread operator is unsupported, so we use Object.assign instead
-attributesManager.setSessionAttributes(Object.assign({}, sessionAttributes, { playbackInfo }));
-    
+    attributesManager.setSessionAttributes(Object.assign({}, sessionAttributes, { playbackInfo }));
+
     return handlerInput.responseBuilder
       .addAudioPlayerStopDirective()
       .getResponse();
@@ -112,11 +177,11 @@ const ResumePlaybackHandler = {
   handle(handlerInput) {
     const { attributesManager } = handlerInput;
     const playbackInfo = attributesManager.getSessionAttributes().playbackInfo || {};
-    
+
     playbackInfo.state = 'PLAYING';
-const sessionAttributes = attributesManager.getSessionAttributes();
-attributesManager.setSessionAttributes(Object.assign({}, sessionAttributes, { playbackInfo }));
-    
+    const sessionAttributes = attributesManager.getSessionAttributes();
+    attributesManager.setSessionAttributes(Object.assign({}, sessionAttributes, { playbackInfo }));
+
     return handlerInput.responseBuilder
       .addAudioPlayerPlayDirective()
       .getResponse();
@@ -124,5 +189,14 @@ attributesManager.setSessionAttributes(Object.assign({}, sessionAttributes, { pl
 };
 
 exports.handler = Alexa.SkillBuilders.custom()
-    .addRequestHandlers(CancelAndStopIntentHandler, CancelAndStopIntentHandler, LaunchRequestHandler, PlayRadioIntentHandler, PausePlaybackHandler, ResumePlaybackHandler, HelpRequestHandler)
-    .lambda();
+  .addRequestHandlers(
+    LaunchRequestHandler,
+    PlayRadioIntentHandler,
+    SessionEndedRequestHandler,
+    CancelAndStopIntentHandler,
+    HelpRequestHandler,
+    PausePlaybackHandler,
+    ResumePlaybackHandler,
+    UnsupportedIntentsHandler
+  )
+  .lambda();

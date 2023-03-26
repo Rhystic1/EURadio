@@ -1,11 +1,13 @@
 {
   "interactionModel": {
     "languageModel": {
-      "invocationName": "radio di antonio",
+      "invocationName": "eu radio",
       "intents": [
         {
           "name": "AMAZON.CancelIntent",
-          "samples": []
+          "samples": [
+            "esci"
+          ]
         },
         {
           "name": "AMAZON.HelpIntent",
@@ -49,6 +51,16 @@
           "values": [
             {
               "name": {
+                "value": "rai radio 2",
+                "synonyms": [
+                  "radio 2",
+                  "rai radio due",
+                  "radio due"
+                ]
+              }
+            },
+            {
+              "name": {
                 "value": "radiofreccia",
                 "synonyms": [
                   "radio freccia"
@@ -59,6 +71,7 @@
               "name": {
                 "value": "rai radio 3",
                 "synonyms": [
+                  "rai radio tre",
                   "radio tre",
                   "radio 3"
                 ]
@@ -68,6 +81,7 @@
               "name": {
                 "value": "rai radio 1",
                 "synonyms": [
+                  "rai radio uno",
                   "radio 1",
                   "radio uno"
                 ]
@@ -79,5 +93,5 @@
       ]
     }
   },
-  "version": "2"
+  "version": "5"
 }

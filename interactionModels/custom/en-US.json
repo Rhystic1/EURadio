@@ -1,11 +1,13 @@
 {
   "interactionModel": {
     "languageModel": {
-      "invocationName": "antonio\u0027s radio",
+      "invocationName": "eu radio",
       "intents": [
         {
           "name": "AMAZON.CancelIntent",
-          "samples": []
+          "samples": [
+            "exit"
+          ]
         },
         {
           "name": "AMAZON.HelpIntent",
@@ -55,8 +57,22 @@
           "values": [
             {
               "name": {
+                "value": "rai radio 2",
+                "synonyms": [
+                  "radio two",
+                  "Radio Two",
+                  "Radio 2",
+                  "Rai Radio 2",
+                  "rai radio two",
+                  "radio 2"
+                ]
+              }
+            },
+            {
+              "name": {
                 "value": "radiofreccia",
                 "synonyms": [
+                  "radio freccia",
                   "Radiofreccia",
                   "radio arrow",
                   "Radio Arrow"
@@ -127,5 +143,5 @@
       }
     ]
   },
-  "version": "11"
+  "version": "16"
 }

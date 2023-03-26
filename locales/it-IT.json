@@ -1,0 +1,12 @@
+{
+  "it-IT": {
+    "WELCOME_MSG": "Benvenuto su EU Radio!",
+    "PLAY_RAI1": "Ecco RAI Radio 1",
+    "PLAY_RAI2": "Ecco RAI Radio 2",
+    "PLAY_RAI3": "Ecco RAI Radio 3",
+    "PLAY_RADIOFRECCIA": "Ecco Radiofreccia",
+    "UNSUPPORTED_CMD": "Mi dispiace, ma questo comando non è supportato",
+    "STATIONNAME_UNSURE": "Scusa, non ho capito quale stazione vuoi riprodurre",
+    "HELP": "Puoi dire Apri seguito dal nome della stazione. Per uscire, puoi semplicemente dire Stop, Esci, o Basta. Cosa vuoi fare?"
+  }
+}

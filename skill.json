@@ -1,5 +1,96 @@
 {
   "manifest": {
+    "publishingInformation": {
+      "locales": {
+        "it-IT": {
+          "summary": "Una Skill gratuita ed open-source per ascoltare la radio.",
+          "examplePhrases": [
+            "Alexa, apri EU radio",
+            "riproduci radio uno",
+            "riproduci radio tre"
+          ],
+          "keywords": [
+            "radio"
+          ],
+          "name": "EU Radio",
+          "description": "Al momento, questa Skill ha una lista estremamente limitata di stazioni radio disponibili, ma aumenterà nel corso del tempo.",
+          "smallIconUri": "file://assets/images/it-IT_smallIconUri.png",
+          "updatesDescription": "La Skill al momento supporta:\n\n- RAI Radio 1\n- RAI Radio 2\n- RAI Radio 3\n- Radiofreccia",
+          "largeIconUri": "file://assets/images/it-IT_largeIconUri.png"
+        },
+        "en-US": {
+          "summary": "A free, open-source radio Skill for Alexa.",
+          "examplePhrases": [
+            "Alexa, open the EU Radio skill",
+            "play radio 1",
+            "help"
+          ],
+          "keywords": [
+            "radio"
+          ],
+          "name": "EU Radio",
+          "description": "This Skill will allow you to listen to worldwide radio stations. At the moment, it is extremely limited to a select few, but this list will expand in the near future.",
+          "smallIconUri": "file://assets/images/en-US_smallIconUri.png",
+          "updatesDescription": "This Skill currently supports the following Italian radio stations: \n\n- RAI Radio 1\n- RAI Radio 2\n- RAI Radio 3\n- Radiofreccia",
+          "largeIconUri": "file://assets/images/en-US_largeIconUri.png"
+        },
+        "en-AU": {
+          "summary": "A free, open-source radio Skill for Alexa.",
+          "examplePhrases": [
+            "Alexa, open the EU Radio skill",
+            "play radio 1",
+            "help"
+          ],
+          "keywords": [
+            "radio"
+          ],
+          "name": "EU Radio",
+          "description": "This Skill will allow you to listen to worldwide radio stations. At the moment, it is extremely limited to a select few, but this list will expand in the near future.",
+          "smallIconUri": "file://assets/images/en-AU_smallIconUri.png",
+          "updatesDescription": "This Skill currently supports the following Italian radio stations: \n\n- RAI Radio 1\n- RAI Radio 2\n- RAI Radio 3\n- Radiofreccia",
+          "largeIconUri": "file://assets/images/en-AU_largeIconUri.png"
+        },
+        "en-GB": {
+          "summary": "A free, open-source radio Skill for Alexa.",
+          "examplePhrases": [
+            "Alexa, open the EU Radio skill",
+            "play radio 1",
+            "help"
+          ],
+          "keywords": [
+            "radio"
+          ],
+          "name": "EU Radio",
+          "description": "This Skill will allow you to listen to worldwide radio stations. At the moment, it is extremely limited to a select few, but this list will expand in the near future.",
+          "smallIconUri": "file://assets/images/en-GB_smallIconUri.png",
+          "updatesDescription": "This Skill currently supports the following Italian radio stations: \n\n- RAI Radio 1\n- RAI Radio 2\n- RAI Radio 3\n- Radiofreccia",
+          "largeIconUri": "file://assets/images/en-GB_largeIconUri.png"
+        }
+      },
+      "automaticDistribution": {
+        "isActive": false
+      },
+      "isAvailableWorldwide": false,
+      "testingInstructions": "This Skill currently only supports a few radio stations, but it should respond to the following ones (after saying \"play...\"): RAI Radio 1, RAI Radio 2, RAI Radio 3 and Radiofreccia (which should also be triggered by saying \"Radio Arrow\" instead).",
+      "category": "STREAMING_SERVICE",
+      "distributionMode": "PUBLIC",
+      "automaticClonedLocale": {
+        "locales": [
+          {
+            "source": "en-GB",
+            "targets": [
+              "en-US",
+              "en-AU"
+            ]
+          }
+        ]
+      },
+      "distributionCountries": [
+        "GB",
+        "IE",
+        "IT"
+      ]
+    },
     "apis": {
       "custom": {
         "endpoint": {
@@ -31,59 +122,22 @@
       }
     },
     "manifestVersion": "1.0",
-    "publishingInformation": {
-      "automaticClonedLocale": {
-        "locales": [
-          {
-            "source": "en-GB",
-            "targets": [
-              "en-US",
-              "en-AU"
-            ]
-          }
-        ]
-      },
-      "distributionCountries": [],
-      "isAvailableWorldwide": true,
+    "privacyAndCompliance": {
+      "allowsPurchases": false,
       "locales": {
-        "it-IT": {
-          "name": "EU Radio"
-        },
-        "en-US": {
-          "description": "Sample Full Description",
-          "examplePhrases": [
-            "Alexa open hello world",
-            "hello",
-            "help"
-          ],
-          "keywords": [],
-          "name": "EU Radio",
-          "summary": "Sample Short Description"
-        },
-        "en-AU": {
-          "description": "Sample Full Description",
-          "examplePhrases": [
-            "Alexa open hello world",
-            "hello",
-            "help"
-          ],
-          "keywords": [],
-          "name": "EU Radio",
-          "summary": "Sample Short Description"
-        },
-        "en-GB": {
-          "description": "Sample Full Description",
-          "examplePhrases": [
-            "Alexa open hello world",
-            "hello",
-            "help"
-          ],
-          "keywords": [],
-          "name": "EU Radio",
-          "summary": "Sample Short Description"
-        }
+        "it-IT": {},
+        "en-US": {},
+        "en-AU": {},
+        "en-GB": {}
       },
-      "testingInstructions": "Sample Testing Instructions."
+      "containsAds": false,
+      "isExportCompliant": true,
+      "isChildDirected": false,
+      "shoppingKit": {
+        "isShoppingActionsEnabled": false,
+        "isAmazonAssociatesOnAlexaEnabled": false
+      },
+      "usesPersonalInfo": false
     }
   }
 }

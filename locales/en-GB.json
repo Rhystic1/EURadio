@@ -1,0 +1,12 @@
+{
+  "en-GB": {
+    "WELCOME_MSG": "Welcome to EU Radio!",
+    "PLAY_RAI1": "Playing RAI Radio 1",
+    "PLAY_RAI2": "Playing RAI Radio 2",
+    "PLAY_RAI3": "Playing RAI Radio 3",
+    "PLAY_RADIOFRECCIA": "Playing Radiofreccia",
+    "UNSUPPORTED_CMD": "I'm sorry, but that command is unsupported.",
+    "STATIONNAME_UNSURE": "Sorry, I didn't catch which station you want to play",
+    "HELP": "You can say Play followed by a radio station name. To exit, just say Stop, Exit, or Quit. What would you like to do?"
+  }
+}

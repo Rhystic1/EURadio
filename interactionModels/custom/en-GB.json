@@ -50,6 +50,27 @@
         {
           "name": "AMAZON.ResumeIntent",
           "samples": []
+        },
+        {
+          "name": "ChangeStationIntent",
+          "slots": [
+            {
+              "name": "station",
+              "type": "StationName"
+            }
+          ],
+          "samples": [
+            "open {station} instead",
+            "change to {station} instead",
+            "change station to {station}"
+          ]
+        },
+        {
+          "name": "SecretBedtimeIntent",
+          "slots": [],
+          "samples": [
+            "authorization one one five three red"
+          ]
         }
       ],
       "types": [
@@ -108,7 +129,12 @@
           ],
           "name": "StationName"
         }
-      ]
+      ],
+      "modelConfiguration": {
+        "fallbackIntentSensitivity": {
+          "level": "MEDIUM"
+        }
+      }
     },
     "dialog": {
       "intents": [
@@ -143,5 +169,5 @@
       }
     ]
   },
-  "version": "13"
+  "version": "18"
 }

@@ -44,6 +44,26 @@
           "samples": [
             "riproduci {station}"
           ]
+        },
+        {
+          "name": "ChangeStationIntent",
+          "slots": [
+            {
+              "name": "station",
+              "type": "StationName"
+            }
+          ],
+          "samples": [
+            "apri invece {station}",
+            "cambia e metti {station}"
+          ]
+        },
+        {
+          "name": "SecretBedtimeIntent",
+          "slots": [],
+          "samples": [
+            "autorizzazione uno uno cinque tre rosso"
+          ]
         }
       ],
       "types": [
@@ -93,5 +113,5 @@
       ]
     }
   },
-  "version": "5"
+  "version": "8"
 }
